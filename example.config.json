@@ -1,0 +1,15 @@
+{
+    "cron": "*/20 * * * * *",
+    "targets": [
+        {
+            "url": "https://google.com",
+            "name": "Google"
+        }
+    ],
+    "notification": {
+        "telegram": {
+            "bot": "abc",
+            "chat": "123"
+        } 
+    }
+}
