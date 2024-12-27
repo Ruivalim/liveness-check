@@ -24,23 +24,20 @@ jobs:
             target: x86_64-unknown-linux-musl
             bin: liveness-check
             name: precious-Linux-x86_64-musl.tar.gz
-          - os-name: Linux-aarch64
-            runs-on: ubuntu-20.04
-            target: aarch64-unknown-linux-musl
-            bin: liveness-check
         toolchain:
           - stable
     steps:
       - uses: actions/checkout@v4
-      - name: Install dependencies
+      - name: Install musl and OpenSSL for target
         run: |
           sudo apt-get update
-          sudo apt-get install -y musl-tools pkg-config libssl-dev openssl
-          
-      - name: Set OpenSSL environment variables
-        run: |
-          echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
-          echo "PKG_CONFIG_PATH=/usr/lib/pkgconfig" >> $GITHUB_ENV
+          sudo apt-get install -y musl musl-dev musl-tools
+          curl -O https://www.musl.cc/x86_64-linux-musl-cross.tgz
+          tar -xvf x86_64-linux-musl-cross.tgz
+          export PATH=$PATH:$(pwd)/x86_64-linux-musl-cross/bin
+          export OPENSSL_DIR=/usr
+          export PKG_CONFIG_SYSROOT_DIR=/usr
+          export PKG_CONFIG_PATH=/usr/lib/pkgconfig
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v1
