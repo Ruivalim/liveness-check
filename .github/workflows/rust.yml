@@ -36,6 +36,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y musl-tools pkg-config libssl-dev openssl
+          
+      - name: Set OpenSSL environment variables
+        run: |
+          echo "OPENSSL_DIR=/usr" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=/usr/lib/pkgconfig" >> $GITHUB_ENV
+
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v1
         with:
