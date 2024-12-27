@@ -5,6 +5,7 @@ pub struct DIM<K: Eq + Hash, T> {
     storage: HashMap<K, T>,
 }
 
+#[allow(dead_code)]
 impl<K: Eq + Hash, T> DIM<K, T> {
     pub fn new() -> Self {
         DIM {
